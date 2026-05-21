@@ -104,14 +104,45 @@ jobs:
         env:
           AMLL_IOS_BUILD: "true"
 
-      - name: 自动初始化 iOS 工程及构建前端资源
+      - name: 自动初始化 iOS 工程
         run: |
-          # 首次在 CI 环境中生成 iOS 相关的模板及项目文件
           pnpm -F player tauri ios init
+        env:
+          AMLL_GITHUB_IS_ACTION: true
 
-          # 构建前端静态文件，生成 dist 目录
-          # 必须在 xcodebuild 之前完成，xcode-script 的 Rust 编译会内嵌 frontendDist 的产物
-          pnpm -F player build
+      - name: 禁用 Xcode 工程自动签名 (免证书构建)
+        shell: bash
+        run: |
+          # -----------------------------------------------------------------------
+          # tauri ios init 生成的工程默认为 Automatic 签名，必须在构建前将其改为
+          # Manual 并禁用签名，否则 xcodebuild 会要求选择 Development Team。
+          # tauri ios build 内部通过 WebSocket 驱动 xcode-script，无法通过命令行
+          # 参数覆盖签名设置，只能在项目文件层面修改。
+          # -----------------------------------------------------------------------
+          PBXPROJ="packages/player/src-tauri/gen/apple/amll-player.xcodeproj/project.pbxproj"
+
+          # 切换为 Manual 签名模式，清空 Development Team
+          sed -i '' 's/CODE_SIGN_STYLE = Automatic;/CODE_SIGN_STYLE = Manual;/g' "$PBXPROJ"
+          sed -i '' 's/DEVELOPMENT_TEAM = [A-Z0-9]*;/DEVELOPMENT_TEAM = "";/g' "$PBXPROJ"
+
+          # 注入 CODE_SIGNING_REQUIRED=NO 和 CODE_SIGNING_ALLOWED=NO
+          node -e '
+            const fs = require("fs");
+            const path = process.argv[1];
+            let content = fs.readFileSync(path, "utf8");
+            if (!content.includes("CODE_SIGNING_ALLOWED = NO")) {
+              content = content.replaceAll(
+                "CODE_SIGN_STYLE = Manual;",
+                "CODE_SIGN_STYLE = Manual;\n\t\t\t\tCODE_SIGNING_ALLOWED = NO;\n\t\t\t\tCODE_SIGNING_REQUIRED = NO;"
+              );
+              fs.writeFileSync(path, content, "utf8");
+            }
+            console.log("Code signing disabled in project.pbxproj");
+          ' "$PBXPROJ"
+
+
+      - name: 构建前端资源
+        run: pnpm -F player build
         env:
           AMLL_GITHUB_IS_ACTION: true
 
@@ -124,41 +155,33 @@ jobs:
           /usr/libexec/PlistBuddy -c "Add :UIBackgroundModes:0 string audio" "$PLIST_PATH" || true
           echo "Info.plist background audio modes injected."
 
-      - name: 使用 xcodebuild 强行编译无签名 iOS 归档包 (免证书)
+      - name: 使用 Tauri CLI 构建无签名 iOS 应用
         run: |
-          # -----------------------------------------------------------------------
-          # 【关键预处理】预先创建 Tauri xcode-script 所需的 server-addr 临时文件。
-          # 原因：Tauri 注入到 Xcode 的「Build Rust Code」脚本阶段在初始化时
-          # (mobile/mod.rs) 无论 debug/release 模式都会尝试读取此文件。
-          # release 模式下文件内容不被使用（不需要连接 dev server），
-          # 但文件必须存在，否则必然 panic 并中断构建。
-          # -----------------------------------------------------------------------
-          echo "http://localhost:1420" > "$TMPDIR/net.stevexmh.amllplayer-server-addr"
-
-          # -----------------------------------------------------------------------
-          # 直接调用 xcodebuild archive 以完整控制签名参数。
-          # 不能用 tauri ios build，因为它内部透传 -- 后的参数至 xcodebuild
-          # 的机制在 build 模式下无效，CODE_SIGNING_REQUIRED=NO 不会被应用。
-          # -----------------------------------------------------------------------
-          xcodebuild archive \
-            -project packages/player/src-tauri/gen/apple/amll-player.xcodeproj \
-            -scheme "amll-player_iOS" \
-            -configuration release \
-            -destination "generic/platform=iOS" \
-            -archivePath build/amll-player.xcarchive \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
+          # xcode-script 通过 WebSocket 与 Tauri CLI 通信获取构建指令，
+          # 必须通过 tauri ios build 启动，无法用裸 xcodebuild 替代。
+          # 签名已在上一步于 .pbxproj 层面禁用，无需额外参数。
+          pnpm -F player tauri ios build
+        env:
+          AMLL_GITHUB_IS_ACTION: true
 
       - name: 压包并生成无签名版 .ipa
         run: |
-          # 建立规范的 Payload 目录结构并复制 .app 文件
-          mkdir -p build/Payload
-          cp -r "build/amll-player.xcarchive/Products/Applications/AMLL Player.app" build/Payload/
+          # tauri ios build 的输出位置因版本而异，动态查找 .app
+          APP_PATH=$(find packages/player/src-tauri/gen/apple -name "AMLL Player.app" 2>/dev/null | head -1)
+          if [ -z "$APP_PATH" ]; then
+            APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "AMLL Player.app" -path "*/release-iphoneos/*" 2>/dev/null | head -1)
+          fi
+          if [ -z "$APP_PATH" ]; then
+            echo "ERROR: AMLL Player.app not found. Listing possible locations:"
+            find . -name "*.app" 2>/dev/null
+            exit 1
+          fi
+          echo "Found: $APP_PATH"
 
-          # 压缩为无签名 ipa 包
-          cd build
-          zip -r amll-player-unsigned.ipa Payload
-          echo "Verification: amll-player-unsigned.ipa size and file generated."
+          mkdir -p build/Payload
+          cp -r "$APP_PATH" build/Payload/
+          cd build && zip -r amll-player-unsigned.ipa Payload
+          echo "IPA created:"
           ls -la amll-player-unsigned.ipa
 
       - name: 上传无签名 ipa 包至 GitHub Action Artifacts
