@@ -128,7 +128,8 @@ jobs:
           xcodebuild archive \
             -project packages/player/src-tauri/gen/apple/amll-player.xcodeproj \
             -scheme "amll-player_iOS" \
-            -configuration Release \
+            -configuration release \
+            -destination "generic/platform=iOS" \
             -archivePath build/amll-player.xcarchive \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
