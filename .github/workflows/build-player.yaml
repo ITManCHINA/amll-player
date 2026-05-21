@@ -114,32 +114,35 @@ jobs:
         shell: bash
         run: |
           # -----------------------------------------------------------------------
-          # tauri ios init 生成的工程默认为 Automatic 签名，必须在构建前将其改为
-          # Manual 并禁用签名，否则 xcodebuild 会要求选择 Development Team。
-          # tauri ios build 内部通过 WebSocket 驱动 xcode-script，无法通过命令行
-          # 参数覆盖签名设置，只能在项目文件层面修改。
+          # tauri ios init 生成的工程默认为 Automatic 签名。
+          # 我们使用正则匹配项目中所有的 buildSettings 块，统一强制注入 Manual 签名
+          # 与禁用签名的黄金配置，彻底绕过 Xcode 16 对 Team ID 和证书的校验。
           # -----------------------------------------------------------------------
           PBXPROJ="packages/player/src-tauri/gen/apple/amll-player.xcodeproj/project.pbxproj"
 
-          # 切换为 Manual 签名模式，清空 Development Team
-          sed -i '' 's/CODE_SIGN_STYLE = Automatic;/CODE_SIGN_STYLE = Manual;/g' "$PBXPROJ"
-          sed -i '' 's/DEVELOPMENT_TEAM = [A-Z0-9]*;/DEVELOPMENT_TEAM = "";/g' "$PBXPROJ"
-
-          # 注入 CODE_SIGNING_REQUIRED=NO 和 CODE_SIGNING_ALLOWED=NO
           node -e '
             const fs = require("fs");
             const path = process.argv[1];
             let content = fs.readFileSync(path, "utf8");
-            if (!content.includes("CODE_SIGNING_ALLOWED = NO")) {
-              content = content.replaceAll(
-                "CODE_SIGN_STYLE = Manual;",
-                "CODE_SIGN_STYLE = Manual;\n\t\t\t\tCODE_SIGNING_ALLOWED = NO;\n\t\t\t\tCODE_SIGNING_REQUIRED = NO;"
-              );
-              fs.writeFileSync(path, content, "utf8");
-            }
-            console.log("Code signing disabled in project.pbxproj");
-          ' "$PBXPROJ"
+            
+            content = content.replace(/buildSettings = \{([\s\S]*?)\};/g, (match, body) => {
+              let newBody = body
+                .replace(/CODE_SIGN_STYLE = [^;]+;/g, "")
+                .replace(/DEVELOPMENT_TEAM = [^;]+;/g, "")
+                .replace(/CODE_SIGN_IDENTITY = [^;]+;/g, "")
+                .replace(/CODE_SIGNING_ALLOWED = [^;]+;/g, "")
+                .replace(/CODE_SIGNING_REQUIRED = [^;]+;/g, "")
+                .replace(/PROVISIONING_PROFILE_SPECIFIER = [^;]+;/g, "")
+                .split("\n")
+                .filter(line => line.trim() !== "")
+                .join("\n");
+              
+              return `buildSettings = {\n${newBody}\n\t\t\t\tCODE_SIGNING_ALLOWED = NO;\n\t\t\t\tCODE_SIGNING_REQUIRED = NO;\n\t\t\t\tCODE_SIGN_IDENTITY = "";\n\t\t\t\tCODE_SIGN_STYLE = Manual;\n\t\t\t\tDEVELOPMENT_TEAM = "";\n\t\t\t};`;
+            });
 
+            fs.writeFileSync(path, content, "utf8");
+            console.log("Successfully rewrote all buildSettings in project.pbxproj to disable signing.");
+          ' "$PBXPROJ"
 
       - name: 构建前端资源
         run: pnpm -F player build
