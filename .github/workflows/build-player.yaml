@@ -104,13 +104,11 @@ jobs:
         env:
           AMLL_IOS_BUILD: "true"
 
-      - name: 自动初始化 iOS 工程及构建前端资源
+      - name: 自动初始化 iOS 工程
         run: |
-          # 首次在 CI 环境中生成 iOS 相关的模板、CocoaPods 依赖及项目文件
+          # 首次在 CI 环境中生成 iOS 相关的模板及项目文件
+          # 注意：不要在这里提前 build，tauri ios build 内部会调用 beforeBuildCommand
           pnpm -F player tauri ios init
-          
-          # 构建前端静态文件，生成 dist 目录，供 Xcode 打包使用
-          pnpm -F player build
         env:
           AMLL_GITHUB_IS_ACTION: true
 
@@ -123,22 +121,26 @@ jobs:
           /usr/libexec/PlistBuddy -c "Add :UIBackgroundModes:0 string audio" "$PLIST_PATH" || true
           echo "Info.plist background audio modes injected."
 
-      - name: 使用 xcodebuild 强行编译无签名 iOS 归档包 (免证书)
+      - name: 使用 Tauri CLI 完整构建无签名 iOS 归档包 (免证书)
+        # 必须使用 tauri ios build 而非裸 xcodebuild，原因：
+        # xcodebuild 内部会调用 Tauri 注入的 xcode-script 构建脚本，
+        # 该脚本需要读取 Tauri CLI 在启动时写入的 server-addr 临时文件。
+        # 绕过 tauri CLI 直接调用 xcodebuild，addr 文件不存在，必然 panic。
         run: |
-          xcodebuild archive \
-            -project packages/player/src-tauri/gen/apple/amll-player.xcodeproj \
-            -scheme "amll-player_iOS" \
-            -configuration release \
-            -destination "generic/platform=iOS" \
-            -archivePath build/amll-player.xcarchive \
+          pnpm -F player tauri ios build \
+            -- \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
 
       - name: 压包并生成无签名版 .ipa
         run: |
+          # tauri ios build 产出的 xcarchive 位于 gen/apple/build 目录
+          XCARCHIVE=$(find packages/player/src-tauri/gen/apple/build -name "*.xcarchive" | head -1)
+          echo "Found xcarchive at: $XCARCHIVE"
+          
           # 建立规范的 Payload 目录结构并复制 .app 文件
           mkdir -p build/Payload
-          cp -r build/amll-player.xcarchive/Products/Applications/amll-player.app build/Payload/
+          cp -r "$XCARCHIVE/Products/Applications/AMLL Player.app" build/Payload/
           
           # 压缩为无签名 ipa 包
           cd build
