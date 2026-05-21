@@ -69,9 +69,9 @@ jobs:
         shell: bash
         env:
           BUILDER_REPO: ITManCHINA/ffmpeg-builder
-          FFMPEG_VERSION_TAG: "ffmpeg-7.1-930b71d3f307191fb0eab7ad97ad66517b21b655"
+          FFMPEG_VERSION_TAG: "ffmpeg-8.0.1-ec1a92ac790933c2634397e05cf64bffd10762c2"
         run: |
-          PACKAGE_NAME="ffmpeg-7.1-ios-arm64.tar.gz"
+          PACKAGE_NAME="ffmpeg-8.0.1-ios-arm64.tar.gz"
           DOWNLOAD_URL="https://github.com/${BUILDER_REPO}/releases/download/${FFMPEG_VERSION_TAG}/${PACKAGE_NAME}"
           EXTRACT_DIR="${{ github.workspace }}/vendor/ffmpeg_ios"
 
