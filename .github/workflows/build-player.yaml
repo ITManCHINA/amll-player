@@ -100,7 +100,7 @@ jobs:
       - name: 自动初始化 iOS 工程及元数据
         run: |
           # 首次在 CI 环境中生成 iOS 相关的模板、CocoaPods 依赖及项目文件
-          pnpm -F player tauri ios init --non-interactive
+          pnpm -F player tauri ios init
           
           # 执行前置打包，构建前端静态文件与 Tauri Rust 静态库，使 Xcode 空间内容充实
           pnpm -F player tauri ios build --no-bundle
