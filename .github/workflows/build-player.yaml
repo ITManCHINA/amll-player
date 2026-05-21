@@ -96,6 +96,8 @@ jobs:
       - name: 生成开发构建版本号
         run: |
           node ./packages/player/scripts/gen-dev-version.mjs
+        env:
+          AMLL_IOS_BUILD: "true"
 
       - name: 自动初始化 iOS 工程及构建前端资源
         run: |
@@ -119,7 +121,7 @@ jobs:
       - name: 使用 xcodebuild 强行编译无签名 iOS 归档包 (免证书)
         run: |
           xcodebuild archive \
-            -workspace packages/player/src-tauri/gen/apple/amll-player.xcworkspace \
+            -project packages/player/src-tauri/gen/apple/amll-player.xcodeproj \
             -scheme "amll-player_iOS" \
             -configuration Release \
             -archivePath build/amll-player.xcarchive \
