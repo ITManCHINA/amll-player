@@ -168,11 +168,26 @@ jobs:
           echo "Info.plist background audio modes injected."
 
       - name: 使用 Tauri CLI 构建无签名 iOS 应用
+        shell: bash
         run: |
           # xcode-script 通过 WebSocket 与 Tauri CLI 通信获取构建指令，
           # 必须通过 tauri ios build 启动，无法用裸 xcodebuild 替代。
           # 签名已在上一步于 .pbxproj 层面禁用，无需额外参数。
-          pnpm -F player tauri ios build
+          #
+          # 注意：由于我们在 CI 中使用的是无签名免证书构建，最后一步的 Xcode Archive 导出（exportArchive）
+          # 会因为缺少 teamID 而报错退出（code 70）。但此时底层的 .app 已经完美编译成功了（BUILD SUCCEEDED）。
+          # 因此，我们通过 || 捕获失败，如果检测到 AMLL Player.app 确实已成功生成，则视同构建成功。
+          pnpm -F player tauri ios build || {
+            APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "AMLL Player.app" -path "*/release-iphoneos/*" 2>/dev/null | head -1)
+            if [ -n "$APP_PATH" ] && [ -d "$APP_PATH" ]; then
+              echo "Tauri CLI exited with signing/export warning, but AMLL Player.app was compiled successfully!"
+              echo "Found compiled app at: $APP_PATH"
+              echo "Proceeding with manual unsigned packaging..."
+            else
+              echo "ERROR: Tauri CLI build failed and no compiled AMLL Player.app was found."
+              exit 1
+            fi
+          }
         env:
           AMLL_GITHUB_IS_ACTION: true
 
