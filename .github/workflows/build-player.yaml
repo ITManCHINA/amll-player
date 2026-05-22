@@ -89,7 +89,9 @@ jobs:
           rm $PACKAGE_NAME
 
           # 设置链接编译所需的 FFMPEG_DIR 环境变量，映射真机目标
+          echo "FFMPEG_DIR=$EXTRACT_DIR" >> $GITHUB_ENV
           echo "FFMPEG_DIR_AARCH64_APPLE_IOS=$EXTRACT_DIR" >> $GITHUB_ENV
+          echo "FFMPEG_DIR_aarch64_apple_ios=$EXTRACT_DIR" >> $GITHUB_ENV
           echo "FFmpeg iOS environment set up successfully."
 
       - name: 安装 pnpm 依赖
