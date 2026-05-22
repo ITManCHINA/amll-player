@@ -94,6 +94,13 @@ jobs:
           echo "FFMPEG_DIR_aarch64_apple_ios=$EXTRACT_DIR" >> $GITHUB_ENV
           echo "FFmpeg iOS environment set up successfully."
 
+      - name: 修复 ffmpeg-sys-next：克隆并 patch build.rs 以分离 iOS/macOS 框架链接
+        shell: bash
+        run: |
+          PATCH_DIR="${{ github.workspace }}/vendor/rust-ffmpeg-sys-patched"
+          git clone --depth=1 https://github.com/apoint123/rust-ffmpeg-sys.git "$PATCH_DIR"
+          node ./packages/player/scripts/patch-ffmpeg.mjs
+
       - name: 安装 pnpm 依赖
         run: |
           pnpm i --frozen-lockfile --ignore-scripts
