@@ -1,4 +1,28 @@
 [env]
-FFMPEG_DIR = { value = "vendor/ffmpeg_ios", relative = true }
 FFMPEG_DIR_AARCH64_APPLE_IOS = { value = "vendor/ffmpeg_ios", relative = true }
 FFMPEG_DIR_aarch64_apple_ios = { value = "vendor/ffmpeg_ios", relative = true }
+
+[target.aarch64-apple-ios.ffmpeg]
+rustc-link-search = ["vendor/ffmpeg_ios/lib"]
+rustc-link-lib = [
+    "static=avcodec",
+    "static=avdevice",
+    "static=avfilter",
+    "static=avformat",
+    "static=avutil",
+    "static=swresample",
+    "static=swscale",
+    "framework=AudioToolbox",
+    "framework=AVFoundation",
+    "framework=CoreFoundation",
+    "framework=CoreGraphics",
+    "framework=CoreMedia",
+    "framework=CoreVideo",
+    "framework=Foundation",
+    "framework=Security",
+    "framework=VideoToolbox",
+    "iconv",
+    "z",
+]
+
+
