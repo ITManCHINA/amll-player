@@ -96,19 +96,20 @@ if (patched === content) {
 writeFileSync(buildRsPath, patched, "utf-8");
 console.log("Successfully patched build.rs");
 
-// Now append the patch to workspace Cargo.toml
+// Now patch workspace Cargo.toml under [patch.crates-io]
 console.log("Checking Cargo.toml at", workspaceCargoTomlPath);
 let cargoToml = readFileSync(workspaceCargoTomlPath, "utf-8");
-const patchBlock = `
-# --- iOS CI patch: override ffmpeg-sys-next with a locally patched version ---
-[patch."https://github.com/apoint123/rust-ffmpeg-sys"]
-ffmpeg-sys-next = { path = "vendor/rust-ffmpeg-sys-patched" }
-`;
 
-if (!cargoToml.includes("vendor/rust-ffmpeg-sys-patched")) {
-	cargoToml = cargoToml.trimEnd() + "\n" + patchBlock;
+const targetPatch = 'ffmpeg-sys-next = { git = "https://github.com/apoint123/rust-ffmpeg-sys" }';
+const localPatch = 'ffmpeg-sys-next = { path = "vendor/rust-ffmpeg-sys-patched" }';
+
+if (cargoToml.includes(targetPatch)) {
+	cargoToml = cargoToml.replace(targetPatch, localPatch);
 	writeFileSync(workspaceCargoTomlPath, cargoToml, "utf-8");
-	console.log("Successfully appended [patch] block to workspace Cargo.toml");
+	console.log("Successfully replaced crates-io patch in Cargo.toml with the local patched path.");
+} else if (cargoToml.includes(localPatch)) {
+	console.log("Cargo.toml is already patched with the local path.");
 } else {
-	console.log("[patch] block already exists in Cargo.toml");
+	console.error("ERROR: Could not find the expected [patch.crates-io] entry for ffmpeg-sys-next in Cargo.toml.");
+	process.exit(1);
 }
