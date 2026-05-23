@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build",
+		"build": "node -e \"if(process.env.SKIP_FRONTEND_BUILD){console.log('Skipping frontend build (already compiled in CI)');process.exit(0)}\" && vite build",
 		"build:dev": "vite build --mode dev",
 		"fmt": "biome format --write ./src",
 		"preview": "vite preview",
