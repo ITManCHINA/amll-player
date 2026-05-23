@@ -538,8 +538,8 @@ pub fn run() {
                     let session = AVAudioSession::sharedInstance();
                     let category = ns_string!("AVAudioSessionCategoryPlayback");
 
-                    let _: () = msg_send![session, setCategory: category error: nil];
-                    let _: bool = msg_send![session, setActive: true error: nil];
+                    let _: () = msg_send![&session, setCategory: category, error: std::ptr::null_mut()];
+                    let _: bool = msg_send![&session, setActive: true, error: std::ptr::null_mut()];
                 }
                 info!("iOS AVAudioSession Category set to Playback successfully!");
             }
