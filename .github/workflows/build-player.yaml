@@ -107,9 +107,11 @@ jobs:
         env:
           AMLL_IOS_BUILD: "true"
 
-      - name: 自动初始化 iOS 工程
+      - name: 自动初始化 iOS 工程并配置图标
         run: |
           pnpm -F player tauri ios init
+          # 从高分辨率主图生成符合 iOS 规范的无切边专属图标集
+          pnpm -F player tauri icon src-tauri/icons/512x512@2x.png --ios-color '#ffffff'
         env:
           AMLL_GITHUB_IS_ACTION: true
 
