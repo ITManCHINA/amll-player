@@ -73,8 +73,8 @@ jobs:
       - name: 自动拉取并链接 iOS 预编译 FFmpeg 静态库
         shell: bash
         env:
-          BUILDER_REPO: ITManCHINA/ffmpeg-builder
-          FFMPEG_VERSION_TAG: "ffmpeg-8.0.1-ec1a92ac790933c2634397e05cf64bffd10762c2"
+          BUILDER_REPO: apoint123/ffmpeg-builder
+          FFMPEG_VERSION_TAG: "ffmpeg-8.0.1-cc5ef4262cfdcf5eba1e9d8b6d4020e9998c5680"
         run: |
           PACKAGE_NAME="ffmpeg-8.0.1-ios-arm64.tar.gz"
           DOWNLOAD_URL="https://github.com/${BUILDER_REPO}/releases/download/${FFMPEG_VERSION_TAG}/${PACKAGE_NAME}"
