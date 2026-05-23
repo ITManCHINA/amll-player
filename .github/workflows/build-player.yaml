@@ -34,7 +34,7 @@ jobs:
   build-tauri-ios:
     name: 自动构建 iOS 移动版 (无签名 IPA)
     needs: clean-pre-release
-    runs-on: macos-14 # 使用 GitHub 托管的 Apple Silicon (M1/M2) 运行器以获取极速构建性能
+    runs-on: macos-14
 
     steps:
       - uses: actions/checkout@v4
@@ -60,7 +60,7 @@ jobs:
         uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: stable
-          targets: "aarch64-apple-ios" # 仅安装物理 iOS 真机目标
+          targets: "aarch64-apple-ios"
 
       - name: 配置 Rust 缓存
         uses: Swatinem/rust-cache@v2
@@ -116,11 +116,7 @@ jobs:
       - name: 禁用 Xcode 工程自动签名 (免证书构建)
         shell: bash
         run: |
-          # -----------------------------------------------------------------------
-          # tauri ios init 生成的工程默认为 Automatic 签名。
-          # 我们使用正则匹配项目中所有的 buildSettings 块，统一强制注入 Manual 签名
-          # 与禁用签名的黄金配置，彻底绕过 Xcode 16 对 Team ID 和证书的校验。
-          # -----------------------------------------------------------------------
+          # 修改自动签名配置为手动，强制关闭代码签名校验
           PBXPROJ="packages/player/src-tauri/gen/apple/amll-player.xcodeproj/project.pbxproj"
 
           node -e '
@@ -164,14 +160,8 @@ jobs:
       - name: 使用 Tauri CLI 构建无签名 iOS 应用
         shell: bash
         run: |
-          # xcode-script 通过 WebSocket 与 Tauri CLI 通信获取构建指令，
-          # 必须通过 tauri ios build 启动，无法用裸 xcodebuild 替代。
-          # 签名已在上一步于 .pbxproj 层面禁用，无需额外参数。
-          #
-          #
-          # 注意：由于我们在 CI 中使用的是无签名免证书构建，最后一步的 Xcode Archive 导出（exportArchive）
-          # 会因为缺少 teamID 而报错退出（code 70）。但此时底层的 .app 已经完美编译成功了（BUILD SUCCEEDED）。
-          # 因此，我们通过 || 捕获失败，如果检测到 *.app 确实已成功生成，则视同构建成功。
+          # 使用 Tauri CLI 编译应用。无签名构建在导出归档时会提示报错（code 70），
+          # 若底层的 *.app 已经成功生成，我们捕获该状态并作为构建成功处理。
           pnpm -F player tauri ios build || {
             echo "==== 已编译的 iOS 应用包 (.app) 路径列表 ===="
             find packages/player/src-tauri/gen/apple -name "*.app" 2>/dev/null || true
@@ -196,7 +186,7 @@ jobs:
 
       - name: 压包并生成无签名版 .ipa
         run: |
-          # tauri ios build 的输出位置因版本而异，动态查找 .app
+          # 动态查找编译生成的 .app 目录并打包为无签名 .ipa 产物
           APP_PATH=$(find packages/player/src-tauri/gen/apple -name "*.app" 2>/dev/null | head -1)
           if [ -z "$APP_PATH" ]; then
             APP_PATH=$(find $HOME/Library/Developer/Xcode -name "*.app" 2>/dev/null | head -1)
