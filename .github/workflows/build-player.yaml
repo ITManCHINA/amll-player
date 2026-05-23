@@ -111,7 +111,7 @@ jobs:
         run: |
           pnpm -F player tauri ios init
           # 从高分辨率主图生成符合 iOS 规范的无切边专属图标集
-          pnpm -F player tauri icon src-tauri/icons/512x512@2x.png --ios-color '#ffffff'
+          pnpm -F player tauri icon src-tauri/icons/ios/AppIcon-512@2x.png
         env:
           AMLL_GITHUB_IS_ACTION: true
 
