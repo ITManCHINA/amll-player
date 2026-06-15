@@ -356,6 +356,8 @@ jobs:
     name: 构建 Tauri iOS 版本
     needs: clean-pre-release
     runs-on: macos-14
+    env:
+      CI: true
 
     steps:
       - uses: actions/checkout@v4
@@ -506,7 +508,6 @@ jobs:
         env:
           AMLL_GITHUB_IS_ACTION: true
           SKIP_FRONTEND_BUILD: true
-          CI: true
 
       - name: 压包并生成无签名版 .ipa
         run: |
