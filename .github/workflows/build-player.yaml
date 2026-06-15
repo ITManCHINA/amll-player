@@ -375,8 +375,10 @@ jobs:
 
       - name: 配置 PNPM 免交互清理
         run: |
+          echo "confirm-modules-purge=false" >> ~/.npmrc
           echo "confirm-modules-purge=false" >> .npmrc
           echo "confirm-modules-purge=false" >> packages/player/.npmrc
+          echo "confirm-modules-purge=false" >> packages/player/src-tauri/.npmrc
 
       - name: 安装 Node.js
         uses: actions/setup-node@v4
