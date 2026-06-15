@@ -465,10 +465,6 @@ jobs:
             console.log("Successfully rewrote all buildSettings in project.pbxproj to disable signing.");
           ' "$PBXPROJ"
 
-      - name: 构建前端资源
-        run: pnpm -F player build
-        env:
-          AMLL_GITHUB_IS_ACTION: true
 
       - name: 注入 iOS 后台音频播放权限 (Info.plist)
         shell: bash
