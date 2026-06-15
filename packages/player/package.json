@@ -5,8 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "node -e \"if (!process.env.SKIP_FRONTEND_BUILD) require('child_process').execSync('vite build', { stdio: 'inherit' })\"",
-		"build:dev": "node -e \"if (!process.env.SKIP_FRONTEND_BUILD) require('child_process').execSync('vite build --mode dev', { stdio: 'inherit' })\"",
+		"build": "vite build",
+		"build:dev": "vite build --mode dev",
 		"fmt": "biome format --write ./src",
 		"preview": "vite preview",
 		"tauri": "tauri",
