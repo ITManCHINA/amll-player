@@ -356,8 +356,6 @@ jobs:
     name: 构建 Tauri iOS 版本
     needs: clean-pre-release
     runs-on: macos-14
-    env:
-      CI: true
 
     steps:
       - uses: actions/checkout@v4
@@ -372,17 +370,6 @@ jobs:
 
       - name: 安装 PNPM
         uses: pnpm/action-setup@v4
-
-      - name: 配置 PNPM 免交互清理
-        run: |
-          echo "confirmModulesPurge=false" >> ~/.npmrc
-          echo "confirm-modules-purge=false" >> ~/.npmrc
-          echo "confirmModulesPurge=false" >> .npmrc
-          echo "confirm-modules-purge=false" >> .npmrc
-          echo "confirmModulesPurge=false" >> packages/player/.npmrc
-          echo "confirm-modules-purge=false" >> packages/player/.npmrc
-          echo "confirmModulesPurge=false" >> packages/player/src-tauri/.npmrc
-          echo "confirm-modules-purge=false" >> packages/player/src-tauri/.npmrc
 
       - name: 安装 Node.js
         uses: actions/setup-node@v4
