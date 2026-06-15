@@ -373,6 +373,9 @@ jobs:
       - name: 安装 PNPM
         uses: pnpm/action-setup@v4
 
+      - name: 配置 PNPM 免交互清理
+        run: pnpm config set confirm-modules-purge false --global
+
       - name: 安装 Node.js
         uses: actions/setup-node@v4
         with:
