@@ -333,13 +333,22 @@ jobs:
       - name: 禁用 Xcode 工程自动签名 (免证书构建)
         shell: bash
         run: |
+          PBXPROJ="packages/player/src-tauri/gen/apple/amll-player.xcodeproj/project.pbxproj"
+          # 将自动签名改为手动签名，防止 Xcode 校验 Development Team (非侵入式替换)
+          node -e '
+            const fs = require("fs");
+            const file = process.argv[1];
+            let content = fs.readFileSync(file, "utf8");
+            content = content.replace(/CODE_SIGN_STYLE = Automatic;/g, "CODE_SIGN_STYLE = Manual;");
+            fs.writeFileSync(file, content, "utf8");
+            console.log("Successfully changed CODE_SIGN_STYLE to Manual in project.pbxproj");
+          ' "$PBXPROJ"
+
           # 创建全局 xcconfig 配置文件强制覆盖签名配置
           cat << 'EOF' > ios-nosign.xcconfig
           CODE_SIGNING_ALLOWED = NO
           CODE_SIGNING_REQUIRED = NO
           CODE_SIGN_IDENTITY = 
-          CODE_SIGN_STYLE = Manual
-          DEVELOPMENT_TEAM = 
           EOF
           echo "XCODE_XCCONFIG_FILE=${{ github.workspace }}/ios-nosign.xcconfig" >> $GITHUB_ENV
 
