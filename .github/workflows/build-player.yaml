@@ -348,6 +348,17 @@ jobs:
             packages/player/src-tauri/gen/android/app/build/outputs/**/*.apk
             packages/player/src-tauri/gen/android/app/build/outputs/**/*.aab
 
+      - name: 发布 Android 安装包至 GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}-player-dev
+          prerelease: true
+          files: |
+            packages/player/src-tauri/gen/android/app/build/outputs/**/*.apk
+            packages/player/src-tauri/gen/android/app/build/outputs/**/*.aab
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build-tauri-ios:
     name: 构建 Tauri iOS 版本
     needs: clean-pre-release
@@ -430,32 +441,15 @@ jobs:
       - name: 禁用 Xcode 工程自动签名 (免证书构建)
         shell: bash
         run: |
-          # 修改自动签名配置为手动，强制关闭代码签名校验
-          PBXPROJ="packages/player/src-tauri/gen/apple/amll-player.xcodeproj/project.pbxproj"
-
-          node -e '
-            const fs = require("fs");
-            const path = process.argv[1];
-            let content = fs.readFileSync(path, "utf8");
-            
-            content = content.replace(/buildSettings = \{([\s\S]*?)\};/g, (match, body) => {
-              let newBody = body
-                .replace(/CODE_SIGN_STYLE = [^;]+;/g, "")
-                .replace(/DEVELOPMENT_TEAM = [^;]+;/g, "")
-                .replace(/CODE_SIGN_IDENTITY = [^;]+;/g, "")
-                .replace(/CODE_SIGNING_ALLOWED = [^;]+;/g, "")
-                .replace(/CODE_SIGNING_REQUIRED = [^;]+;/g, "")
-                .replace(/PROVISIONING_PROFILE_SPECIFIER = [^;]+;/g, "")
-                .split("\n")
-                .filter(line => line.trim() !== "")
-                .join("\n");
-              
-              return `buildSettings = {\n${newBody}\n\t\t\t\tCODE_SIGNING_ALLOWED = NO;\n\t\t\t\tCODE_SIGNING_REQUIRED = NO;\n\t\t\t\tCODE_SIGN_IDENTITY = "";\n\t\t\t\tCODE_SIGN_STYLE = Manual;\n\t\t\t\tDEVELOPMENT_TEAM = "";\n\t\t\t\tCI = true;\n\t\t\t};`;
-            });
-
-            fs.writeFileSync(path, content, "utf8");
-            console.log("Successfully rewrote all buildSettings in project.pbxproj to disable signing.");
-          ' "$PBXPROJ"
+          # 创建全局 xcconfig 配置文件强制覆盖签名配置
+          cat << 'EOF' > ios-nosign.xcconfig
+          CODE_SIGNING_ALLOWED = NO
+          CODE_SIGNING_REQUIRED = NO
+          CODE_SIGN_IDENTITY = 
+          CODE_SIGN_STYLE = Manual
+          DEVELOPMENT_TEAM = 
+          EOF
+          echo "XCODE_XCCONFIG_FILE=${{ github.workspace }}/ios-nosign.xcconfig" >> $GITHUB_ENV
 
       - name: 注入 iOS 后台音频播放权限 (Info.plist)
         shell: bash
@@ -516,3 +510,12 @@ jobs:
         with:
           name: AMLL Player iOS Unsigned IPA
           path: build/amll-player-unsigned.ipa
+
+      - name: 发布 iOS 安装包至 GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}-player-dev
+          prerelease: true
+          files: build/amll-player-unsigned.ipa
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
