@@ -253,22 +253,42 @@ jobs:
           export JAVA_HOME=$JAVA_HOME_17_X64
           pnpm -F player tauri android build --target aarch64 --target x86_64 --split-per-abi
 
+      - name: 整理并重命名 Android 构建包
+        run: |
+          VERSION=$(node -p "require('./packages/player/src-tauri/tauri.conf.json').version")
+          echo "Version is $VERSION"
+          mkdir -p build-dist
+          find packages/player/src-tauri/gen/android/app/build/outputs -name "*.apk" | while read -r apk; do
+            filename=$(basename "$apk")
+            if [[ "$filename" == *"arm64-v8a"* ]]; then
+              new_name="AMLL.Player-${VERSION}.arm64-release-unsigned.apk"
+            elif [[ "$filename" == *"x86_64"* ]]; then
+              new_name="AMLL.Player-${VERSION}.x86_64-release-unsigned.apk"
+            elif [[ "$filename" == *"universal"* ]]; then
+              new_name="AMLL.Player-${VERSION}.universal-release-unsigned.apk"
+            else
+              new_name="AMLL.Player-${VERSION}.${filename}"
+            fi
+            cp "$apk" "build-dist/$new_name"
+            echo "Copied $apk to build-dist/$new_name"
+          done
+          find packages/player/src-tauri/gen/android/app/build/outputs -name "*.aab" | while read -r aab; do
+            cp "$aab" "build-dist/AMLL.Player-${VERSION}-release.aab"
+            echo "Copied $aab to build-dist/AMLL.Player-${VERSION}-release.aab"
+          done
+
       - name: 上传产物到 Action Artifact
         uses: actions/upload-artifact@v4
         with:
           name: AMLL Player Android Universal
-          path: |
-            packages/player/src-tauri/gen/android/app/build/outputs/**/*.apk
-            packages/player/src-tauri/gen/android/app/build/outputs/**/*.aab
+          path: build-dist/*
 
       - name: 发布 Android 安装包至 GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}-player-dev
           prerelease: true
-          files: |
-            packages/player/src-tauri/gen/android/app/build/outputs/**/*.apk
-            packages/player/src-tauri/gen/android/app/build/outputs/**/*.aab
+          files: build-dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -346,11 +366,14 @@ jobs:
           # 3. 校验并打包为无签名 .ipa
           if [ -n "$APP_PATH" ] && [ -d "$APP_PATH" ]; then
             echo "Successfully found compiled .app at: $APP_PATH"
+            VERSION=$(node -p "require('./packages/player/src-tauri/tauri.conf.json').version")
+            COMMIT_COUNT=$(git rev-list --count HEAD)
+            IPA_NAME="AMLL.Player-${VERSION}+${COMMIT_COUNT}.arm64-release-unsigned.ipa"
+            
             mkdir -p build/Payload
             cp -r "$APP_PATH" build/Payload/
-            cd build && zip -r amll-player-unsigned.ipa Payload
-            echo "IPA successfully created:"
-            ls -la amll-player-unsigned.ipa
+            cd build && zip -r "../$IPA_NAME" Payload
+            echo "IPA successfully created: $IPA_NAME"
           else
             echo "ERROR: Compiled .app not found. Build failed."
             exit 1
@@ -360,13 +383,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AMLL Player iOS Unsigned IPA
-          path: build/amll-player-unsigned.ipa
+          path: "*.ipa"
 
       - name: 发布 iOS 安装包至 GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}-player-dev
           prerelease: true
-          files: build/amll-player-unsigned.ipa
+          files: "*.ipa"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
