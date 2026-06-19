@@ -206,10 +206,7 @@ jobs:
         uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: stable
-          targets:
-            "x86_64-unknown-linux-gnu,x86_64-linux-android,i686-linux-android,aarc\
-            h64-linux-android,arm-linux-androideabi,armv7-linux-androideabi,thu\
-            mbv7neon-linux-androideabi"
+          targets: x86_64-unknown-linux-gnu,x86_64-linux-android,aarch64-linux-android
 
       - name: 安装 wasm-pack
         uses: jetli/wasm-pack-action@v0.4.0
@@ -254,7 +251,7 @@ jobs:
         run: |
           export NDK_HOME=$ANDROID_NDK_HOME
           export JAVA_HOME=$JAVA_HOME_17_X64
-          pnpm -F player tauri android build --split-per-abi
+          pnpm -F player tauri android build --target aarch64 --target x86_64 --split-per-abi
 
       - name: 上传产物到 Action Artifact
         uses: actions/upload-artifact@v4
