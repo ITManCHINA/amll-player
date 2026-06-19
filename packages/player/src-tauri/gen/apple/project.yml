@@ -61,6 +61,9 @@ targets:
         RUST_LOG: info
     settings:
       base:
+        CODE_SIGNING_ALLOWED: false
+        CODE_SIGNING_REQUIRED: false
+        CODE_SIGN_IDENTITY: ""
         ENABLE_BITCODE: false
         ARCHS: [arm64]
         VALID_ARCHS: arm64 

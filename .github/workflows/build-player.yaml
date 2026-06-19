@@ -324,19 +324,6 @@ jobs:
         env:
           AMLL_IOS_BUILD: "true"
 
-
-      - name: 配置 Xcode 签名覆盖 (免证书构建)
-        shell: bash
-        run: |
-          # 创建全局 xcconfig 配置文件强制覆盖签名配置，允许无证书编译
-          cat << 'EOF' > ios-nosign.xcconfig
-          CODE_SIGNING_ALLOWED = NO
-          CODE_SIGNING_REQUIRED = NO
-          CODE_SIGN_IDENTITY = 
-          EOF
-          echo "XCODE_XCCONFIG_FILE=${{ github.workspace }}/ios-nosign.xcconfig" >> $GITHUB_ENV
-
-
       - name: 使用 Tauri CLI 构建无签名 iOS 应用
         shell: bash
         run: |
