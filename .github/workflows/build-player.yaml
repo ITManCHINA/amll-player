@@ -324,6 +324,14 @@ jobs:
         env:
           AMLL_IOS_BUILD: "true"
 
+      - name: 动态注入 iOS 构建版本号至 Info.plist
+        shell: bash
+        run: |
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          PLIST_PATH="packages/player/src-tauri/gen/apple/amll-player_iOS/Info.plist"
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $COMMIT_COUNT" "$PLIST_PATH"
+          echo "Successfully synced CFBundleVersion to $COMMIT_COUNT in Info.plist"
+
       - name: 使用 Tauri CLI 构建无签名 iOS 应用
         shell: bash
         run: |
