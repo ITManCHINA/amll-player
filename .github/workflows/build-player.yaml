@@ -324,11 +324,6 @@ jobs:
         env:
           AMLL_IOS_BUILD: "true"
 
-      - name: 初始化 iOS 工程并配置图标
-        run: |
-          pnpm -F player tauri ios init
-          # 从高分辨率主图生成符合 iOS 规范的无切边专属图标集
-          pnpm -F player tauri icon src-tauri/icons/512x512@2x.png
 
       - name: 禁用 Xcode 工程自动签名 (免证书构建)
         shell: bash
@@ -352,14 +347,6 @@ jobs:
           EOF
           echo "XCODE_XCCONFIG_FILE=${{ github.workspace }}/ios-nosign.xcconfig" >> $GITHUB_ENV
 
-      - name: 注入 iOS 后台音频播放权限 (Info.plist)
-        shell: bash
-        run: |
-          # 在 Xcode 工程生成后，通过 PlistBuddy 写入 UIBackgroundModes=audio 权限，支持后台切歌与播放
-          PLIST_PATH="packages/player/src-tauri/gen/apple/amll-player_iOS/Info.plist"
-          /usr/libexec/PlistBuddy -c "Add :UIBackgroundModes array" "$PLIST_PATH" || true
-          /usr/libexec/PlistBuddy -c "Add :UIBackgroundModes:0 string audio" "$PLIST_PATH" || true
-          echo "Info.plist background audio modes injected."
 
       - name: 使用 Tauri CLI 构建无签名 iOS 应用
         shell: bash
