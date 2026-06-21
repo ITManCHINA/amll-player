@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
+import android.view.Display
 import android.view.WindowManager
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -20,8 +21,24 @@ class MainActivity : TauriActivity() {
         setupImmersiveUi()
         super.onCreate(savedInstanceState)
 
+        unlockHighRefreshRate()
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    private fun unlockHighRefreshRate() {
+        val currentDisplay = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) display else @Suppress("DEPRECATION") windowManager.defaultDisplay
+        val maxMode = currentDisplay?.supportedModes?.maxByOrNull { it.refreshRate } ?: return
+        if (maxMode.refreshRate > 60f) {
+            window.attributes = window.attributes.apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    preferredDisplayModeId = maxMode.modeId
+                } else {
+                    @Suppress("DEPRECATION")
+                    preferredRefreshRate = maxMode.refreshRate
+                }
+            }
+        }
     }
 
     override fun onResume() {
