@@ -38,11 +38,11 @@ catalogs:
       version: 3.6.0
 
 overrides:
-  '@applemusic-like-lyrics/ttml': git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#feat/improve-mobile-perf&path:packages/ttml
-  '@applemusic-like-lyrics/lyric': git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#feat/improve-mobile-perf&path:packages/lyric
-  '@applemusic-like-lyrics/core': git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#feat/improve-mobile-perf&path:packages/core
-  '@applemusic-like-lyrics/react-full': git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#feat/improve-mobile-perf&path:packages/react-full
-  '@applemusic-like-lyrics/react': git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#feat/improve-mobile-perf&path:packages/react
+  '@applemusic-like-lyrics/ttml': git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#e1d57350981c0fac49af5f5383c9fe6b338cb8ad&path:packages/ttml
+  '@applemusic-like-lyrics/lyric': git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#e1d57350981c0fac49af5f5383c9fe6b338cb8ad&path:packages/lyric
+  '@applemusic-like-lyrics/core': git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#e1d57350981c0fac49af5f5383c9fe6b338cb8ad&path:packages/core
+  '@applemusic-like-lyrics/react-full': git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#e1d57350981c0fac49af5f5383c9fe6b338cb8ad&path:packages/react-full
+  '@applemusic-like-lyrics/react': git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#e1d57350981c0fac49af5f5383c9fe6b338cb8ad&path:packages/react
   '@ungap/structured-clone': ^1.3.0
   classnames: ^2.5.1
   framer-motion: ^12.38.0
@@ -61,20 +61,20 @@ importers:
   packages/player:
     dependencies:
       '@applemusic-like-lyrics/core':
-        specifier: git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#feat/improve-mobile-perf&path:packages/core
-        version: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/core(@pixi/app@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))(@pixi/filter-blur@7.4.3(@pixi/core@7.4.3))(@pixi/filter-bulge-pinch@5.1.1(@pixi/core@7.4.3))(@pixi/filter-color-matrix@7.4.3(@pixi/core@7.4.3))(@pixi/sprite@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))
+        specifier: git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#e1d57350981c0fac49af5f5383c9fe6b338cb8ad&path:packages/core
+        version: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/core(@pixi/app@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))(@pixi/filter-blur@7.4.3(@pixi/core@7.4.3))(@pixi/filter-bulge-pinch@5.1.1(@pixi/core@7.4.3))(@pixi/filter-color-matrix@7.4.3(@pixi/core@7.4.3))(@pixi/sprite@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))
       '@applemusic-like-lyrics/fft':
         specifier: ^0.2.2
         version: 0.2.2
       '@applemusic-like-lyrics/lyric':
-        specifier: git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#feat/improve-mobile-perf&path:packages/lyric
-        version: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/lyric
+        specifier: git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#e1d57350981c0fac49af5f5383c9fe6b338cb8ad&path:packages/lyric
+        version: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/lyric
       '@applemusic-like-lyrics/react-full':
-        specifier: git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#feat/improve-mobile-perf&path:packages/react-full
-        version: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/react-full(@pixi/app@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))(@pixi/filter-blur@7.4.3(@pixi/core@7.4.3))(@pixi/filter-bulge-pinch@5.1.1(@pixi/core@7.4.3))(@pixi/filter-color-matrix@7.4.3(@pixi/core@7.4.3))(@pixi/sprite@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(jotai@2.20.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@19.2.17)(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#e1d57350981c0fac49af5f5383c9fe6b338cb8ad&path:packages/react-full
+        version: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/react-full(@pixi/app@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))(@pixi/filter-blur@7.4.3(@pixi/core@7.4.3))(@pixi/filter-bulge-pinch@5.1.1(@pixi/core@7.4.3))(@pixi/filter-color-matrix@7.4.3(@pixi/core@7.4.3))(@pixi/sprite@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(jotai@2.20.1(@babel/core@7.29.0)(@babel/template@7.29.7)(@types/react@19.2.17)(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@applemusic-like-lyrics/ttml':
-        specifier: git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#feat/improve-mobile-perf&path:packages/ttml
-        version: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/ttml
+        specifier: git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#e1d57350981c0fac49af5f5383c9fe6b338cb8ad&path:packages/ttml
+        version: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/ttml
       '@iconify/icons-ic':
         specifier: ^1.2.13
         version: 1.2.13
@@ -146,7 +146,7 @@ importers:
         version: 2.4.3(intl-messageformat@10.7.16)
       jotai:
         specifier: 2.20.1
-        version: 2.20.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@19.2.17)(react@19.2.7)
+        version: 2.20.1(@babel/core@7.29.0)(@babel/template@7.29.7)(@types/react@19.2.17)(react@19.2.7)
       lru-cache:
         specifier: ^11.5.1
         version: 11.5.1
@@ -234,7 +234,7 @@ importers:
         version: 1.63.1(@types/node@25.9.3)(react-dom@19.2.7(react@19.2.7))
       jotai-babel:
         specifier: 'catalog:'
-        version: 0.2.0(@babel/core@7.29.0)(@babel/template@7.28.6)(jotai@2.20.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@19.2.17)(react@19.2.7))
+        version: 0.2.0(@babel/core@7.29.0)(@babel/template@7.29.7)(jotai@2.20.1(@babel/core@7.29.0)(@babel/template@7.29.7)(@types/react@19.2.17)(react@19.2.7))
       vite:
         specifier: 'catalog:'
         version: 8.0.16(@types/node@25.9.3)(jiti@2.7.0)(sass@1.101.0)(yaml@2.9.0)
@@ -245,18 +245,6 @@ importers:
   packages/ws-protocol: {}
 
 packages:
-
-  '@applemusic-like-lyrics/core@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/core':
-    resolution: {gitHosted: true, path: packages/core, tarball: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664}
-    version: 0.5.1
-    peerDependencies:
-      '@pixi/app': '*'
-      '@pixi/core': '*'
-      '@pixi/display': '*'
-      '@pixi/filter-blur': '*'
-      '@pixi/filter-bulge-pinch': '*'
-      '@pixi/filter-color-matrix': '*'
-      '@pixi/sprite': '*'
 
   '@applemusic-like-lyrics/core@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/core':
     resolution: {gitHosted: true, integrity: sha512-mVF17gHZCVPSfpnYoydPgNbioWAO/jHDux6/fgZs6uLS4EB7ZdyrlTZi3MVReRP3jpUlwRdNjZ2bK7V1fYiwkA==, path: packages/core, tarball: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad}
@@ -273,12 +261,12 @@ packages:
   '@applemusic-like-lyrics/fft@0.2.2':
     resolution: {integrity: sha512-38Mm1JiLZ9+WOndvR11WJFoWitvju0G8CV6dj9XSLODINfdApknRm5AZHMQwXD7Gf7KG/N/ePG70v39rCiYA6w==}
 
-  '@applemusic-like-lyrics/lyric@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/lyric':
-    resolution: {gitHosted: true, path: packages/lyric, tarball: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664}
+  '@applemusic-like-lyrics/lyric@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/lyric':
+    resolution: {gitHosted: true, integrity: sha512-mVF17gHZCVPSfpnYoydPgNbioWAO/jHDux6/fgZs6uLS4EB7ZdyrlTZi3MVReRP3jpUlwRdNjZ2bK7V1fYiwkA==, path: packages/lyric, tarball: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad}
     version: 1.0.1
 
-  '@applemusic-like-lyrics/react-full@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/react-full':
-    resolution: {gitHosted: true, path: packages/react-full, tarball: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664}
+  '@applemusic-like-lyrics/react-full@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/react-full':
+    resolution: {gitHosted: true, integrity: sha512-mVF17gHZCVPSfpnYoydPgNbioWAO/jHDux6/fgZs6uLS4EB7ZdyrlTZi3MVReRP3jpUlwRdNjZ2bK7V1fYiwkA==, path: packages/react-full, tarball: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad}
     version: 0.4.1
     peerDependencies:
       jotai: ^2
@@ -298,8 +286,8 @@ packages:
       react: '*'
       react-dom: '*'
 
-  '@applemusic-like-lyrics/ttml@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/ttml':
-    resolution: {gitHosted: true, path: packages/ttml, tarball: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664}
+  '@applemusic-like-lyrics/ttml@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/ttml':
+    resolution: {gitHosted: true, integrity: sha512-mVF17gHZCVPSfpnYoydPgNbioWAO/jHDux6/fgZs6uLS4EB7ZdyrlTZi3MVReRP3jpUlwRdNjZ2bK7V1fYiwkA==, path: packages/ttml, tarball: https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad}
     version: 1.0.1
 
   '@babel/code-frame@7.29.0':
@@ -375,10 +363,6 @@ packages:
 
   '@babel/runtime@7.29.7':
     resolution: {integrity: sha512-Nq8OhGWiZIZGV6hLHoyAKLLcJihP/xFeBMGJoUrxTX2psI8dCifzLhZISFb+VWS3wFMRDmCGw5R+dOySCqPLhw==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/template@7.28.6':
-    resolution: {integrity: sha512-YA6Ma2KsCdGb+WC6UpBVFJGXL58MDA6oyONbjyF/+5sBgxY/dwkhLogbMT2GXXyU84/IhRw/2D1Os1B/giz+BQ==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.29.7':
@@ -2173,9 +2157,6 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  bezier-easing@3.0.0:
-    resolution: {integrity: sha512-lE85voPXiK99T8NHOfhaUqCZpJdP1gBbbTEvdBDdPB+phyvPZPNWalBe42eb6lKOYchP0qZrtBiRCARtT4edRQ==}
-
   bezier-easing@3.0.1:
     resolution: {integrity: sha512-vvvg10Anq7py0+KkIqlwJpUVdde9Z8kSzeUzAkQNYAJdA3mZnLG9r9ExdwtjcASCYER6UkNHdBNHHMnVimnU7A==}
 
@@ -3328,20 +3309,6 @@ packages:
 
 snapshots:
 
-  '@applemusic-like-lyrics/core@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/core(@pixi/app@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))(@pixi/filter-blur@7.4.3(@pixi/core@7.4.3))(@pixi/filter-bulge-pinch@5.1.1(@pixi/core@7.4.3))(@pixi/filter-color-matrix@7.4.3(@pixi/core@7.4.3))(@pixi/sprite@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))':
-    dependencies:
-      '@pixi/app': 7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))
-      '@pixi/core': 7.4.3
-      '@pixi/display': 7.4.3(@pixi/core@7.4.3)
-      '@pixi/filter-blur': 7.4.3(@pixi/core@7.4.3)
-      '@pixi/filter-bulge-pinch': 5.1.1(@pixi/core@7.4.3)
-      '@pixi/filter-color-matrix': 7.4.3(@pixi/core@7.4.3)
-      '@pixi/sprite': 7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))
-      '@ungap/structured-clone': 1.3.0
-      bezier-easing: 3.0.0
-      deep-freeze: 0.0.1
-      gl-matrix: 4.0.0-beta.2
-
   '@applemusic-like-lyrics/core@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/core(@pixi/app@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))(@pixi/filter-blur@7.4.3(@pixi/core@7.4.3))(@pixi/filter-bulge-pinch@5.1.1(@pixi/core@7.4.3))(@pixi/filter-color-matrix@7.4.3(@pixi/core@7.4.3))(@pixi/sprite@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))':
     dependencies:
       '@pixi/app': 7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))
@@ -3358,20 +3325,20 @@ snapshots:
 
   '@applemusic-like-lyrics/fft@0.2.2': {}
 
-  '@applemusic-like-lyrics/lyric@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/lyric':
+  '@applemusic-like-lyrics/lyric@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/lyric':
     dependencies:
-      '@applemusic-like-lyrics/ttml': https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/ttml
+      '@applemusic-like-lyrics/ttml': https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/ttml
       pako: 2.1.0
 
-  '@applemusic-like-lyrics/react-full@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/react-full(@pixi/app@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))(@pixi/filter-blur@7.4.3(@pixi/core@7.4.3))(@pixi/filter-bulge-pinch@5.1.1(@pixi/core@7.4.3))(@pixi/filter-color-matrix@7.4.3(@pixi/core@7.4.3))(@pixi/sprite@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(jotai@2.20.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@19.2.17)(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@applemusic-like-lyrics/react-full@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/react-full(@pixi/app@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))(@pixi/filter-blur@7.4.3(@pixi/core@7.4.3))(@pixi/filter-bulge-pinch@5.1.1(@pixi/core@7.4.3))(@pixi/filter-color-matrix@7.4.3(@pixi/core@7.4.3))(@pixi/sprite@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(jotai@2.20.1(@babel/core@7.29.0)(@babel/template@7.29.7)(@types/react@19.2.17)(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
-      '@applemusic-like-lyrics/core': https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/core(@pixi/app@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))(@pixi/filter-blur@7.4.3(@pixi/core@7.4.3))(@pixi/filter-bulge-pinch@5.1.1(@pixi/core@7.4.3))(@pixi/filter-color-matrix@7.4.3(@pixi/core@7.4.3))(@pixi/sprite@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))
+      '@applemusic-like-lyrics/core': https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/core(@pixi/app@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))(@pixi/filter-blur@7.4.3(@pixi/core@7.4.3))(@pixi/filter-bulge-pinch@5.1.1(@pixi/core@7.4.3))(@pixi/filter-color-matrix@7.4.3(@pixi/core@7.4.3))(@pixi/sprite@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))
       '@applemusic-like-lyrics/react': https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/react(@pixi/app@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3))(@pixi/filter-blur@7.4.3(@pixi/core@7.4.3))(@pixi/filter-bulge-pinch@5.1.1(@pixi/core@7.4.3))(@pixi/filter-color-matrix@7.4.3(@pixi/core@7.4.3))(@pixi/sprite@7.4.3(@pixi/core@7.4.3)(@pixi/display@7.4.3(@pixi/core@7.4.3)))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@ungap/structured-clone': 1.3.0
       classnames: 2.5.1
       corner-smoothing: 0.1.5(react@19.2.7)
       framer-motion: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      jotai: 2.20.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@19.2.17)(react@19.2.7)
+      jotai: 2.20.1(@babel/core@7.29.0)(@babel/template@7.29.7)(@types/react@19.2.17)(react@19.2.7)
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
       react-toastify: 11.1.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -3399,7 +3366,7 @@ snapshots:
     transitivePeerDependencies:
       - '@pixi/filter-bulge-pinch'
 
-  '@applemusic-like-lyrics/ttml@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/3e7a293424d4536d898c70fce47bc50e048b3664#path:packages/ttml': {}
+  '@applemusic-like-lyrics/ttml@https://codeload.github.com/ITManCHINA/applemusic-like-lyrics/tar.gz/e1d57350981c0fac49af5f5383c9fe6b338cb8ad#path:packages/ttml': {}
 
   '@babel/code-frame@7.29.0':
     dependencies:
@@ -3423,7 +3390,7 @@ snapshots:
       '@babel/helper-module-transforms': 7.29.7(@babel/core@7.29.0)
       '@babel/helpers': 7.29.7
       '@babel/parser': 7.29.7
-      '@babel/template': 7.28.6
+      '@babel/template': 7.29.7
       '@babel/traverse': 7.29.7
       '@babel/types': 7.29.7
       '@jridgewell/remapping': 2.3.5
@@ -3491,12 +3458,6 @@ snapshots:
   '@babel/runtime@7.28.6': {}
 
   '@babel/runtime@7.29.7': {}
-
-  '@babel/template@7.28.6':
-    dependencies:
-      '@babel/code-frame': 7.29.7
-      '@babel/parser': 7.29.7
-      '@babel/types': 7.29.7
 
   '@babel/template@7.29.7':
     dependencies:
@@ -5136,8 +5097,6 @@ snapshots:
 
   baseline-browser-mapping@2.10.40: {}
 
-  bezier-easing@3.0.0: {}
-
   bezier-easing@3.0.1: {}
 
   brace-expansion@5.0.6:
@@ -5540,16 +5499,16 @@ snapshots:
 
   jiti@2.7.0: {}
 
-  jotai-babel@0.2.0(@babel/core@7.29.0)(@babel/template@7.28.6)(jotai@2.20.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@19.2.17)(react@19.2.7)):
+  jotai-babel@0.2.0(@babel/core@7.29.0)(@babel/template@7.29.7)(jotai@2.20.1(@babel/core@7.29.0)(@babel/template@7.29.7)(@types/react@19.2.17)(react@19.2.7)):
     dependencies:
       '@babel/core': 7.29.0
-      '@babel/template': 7.28.6
-      jotai: 2.20.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@19.2.17)(react@19.2.7)
+      '@babel/template': 7.29.7
+      jotai: 2.20.1(@babel/core@7.29.0)(@babel/template@7.29.7)(@types/react@19.2.17)(react@19.2.7)
 
-  jotai@2.20.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@19.2.17)(react@19.2.7):
+  jotai@2.20.1(@babel/core@7.29.0)(@babel/template@7.29.7)(@types/react@19.2.17)(react@19.2.7):
     optionalDependencies:
       '@babel/core': 7.29.0
-      '@babel/template': 7.28.6
+      '@babel/template': 7.29.7
       '@types/react': 19.2.17
       react: 19.2.7
 
