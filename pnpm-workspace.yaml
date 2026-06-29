@@ -21,11 +21,11 @@ allowBuilds:
   "@swc/core": true
   esbuild: true
 overrides:
-  "@applemusic-like-lyrics/ttml": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#1b18c248fa307551c9934ed25105170a674e03a8&path:packages/ttml"
-  "@applemusic-like-lyrics/lyric": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#1b18c248fa307551c9934ed25105170a674e03a8&path:packages/lyric"
-  "@applemusic-like-lyrics/core": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#1b18c248fa307551c9934ed25105170a674e03a8&path:packages/core"
-  "@applemusic-like-lyrics/react-full": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#1b18c248fa307551c9934ed25105170a674e03a8&path:packages/react-full"
-  "@applemusic-like-lyrics/react": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#1b18c248fa307551c9934ed25105170a674e03a8&path:packages/react"
+  "@applemusic-like-lyrics/ttml": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#602603490c9dda273395b22283d232df1d1b351d&path:packages/ttml"
+  "@applemusic-like-lyrics/lyric": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#602603490c9dda273395b22283d232df1d1b351d&path:packages/lyric"
+  "@applemusic-like-lyrics/core": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#602603490c9dda273395b22283d232df1d1b351d&path:packages/core"
+  "@applemusic-like-lyrics/react-full": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#602603490c9dda273395b22283d232df1d1b351d&path:packages/react-full"
+  "@applemusic-like-lyrics/react": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#602603490c9dda273395b22283d232df1d1b351d&path:packages/react"
   "@ungap/structured-clone": "^1.3.0"
   "classnames": "^2.5.1"
   "framer-motion": "^12.38.0"

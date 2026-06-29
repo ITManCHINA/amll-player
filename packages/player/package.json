@@ -13,11 +13,11 @@
 		"locale:gen": "i18next-cli extract"
 	},
 	"dependencies": {
-		"@applemusic-like-lyrics/core": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#1b18c248fa307551c9934ed25105170a674e03a8&path:packages/core",
+		"@applemusic-like-lyrics/core": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#602603490c9dda273395b22283d232df1d1b351d&path:packages/core",
 		"@applemusic-like-lyrics/fft": "^0.2.2",
-		"@applemusic-like-lyrics/lyric": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#1b18c248fa307551c9934ed25105170a674e03a8&path:packages/lyric",
-		"@applemusic-like-lyrics/react-full": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#1b18c248fa307551c9934ed25105170a674e03a8&path:packages/react-full",
-		"@applemusic-like-lyrics/ttml": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#1b18c248fa307551c9934ed25105170a674e03a8&path:packages/ttml",
+		"@applemusic-like-lyrics/lyric": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#602603490c9dda273395b22283d232df1d1b351d&path:packages/lyric",
+		"@applemusic-like-lyrics/react-full": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#602603490c9dda273395b22283d232df1d1b351d&path:packages/react-full",
+		"@applemusic-like-lyrics/ttml": "git+https://github.com/ITManCHINA/applemusic-like-lyrics.git#602603490c9dda273395b22283d232df1d1b351d&path:packages/ttml",
 		"@iconify/icons-ic": "^1.2.13",
 		"@iconify/react": "^6.0.2",
 		"@radix-ui/react-icons": "^1.3.2",
